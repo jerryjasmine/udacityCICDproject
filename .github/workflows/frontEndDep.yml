@@ -44,7 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: "us-east-1"
-      FRONTEND_ECR_REPOSITORY_URI: "284496004486.dkr.ecr.us-east-1.amazonaws.com/frontend"
     needs: test  # Ensures the build job waits for both lint and test jobs to complete
     steps:
       - name: Checkout code
@@ -67,10 +66,10 @@ jobs:
       - name: Build Docker image
         run: |
           # Define the ECR repository and image details
-          REPOSITORY_URI=${FRONTEND_ECR_REPOSITORY_URI}
+          REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
           IMAGE_NAME=frontendapp
           GIT_SHA=${{ github.sha }}
-          TAGGED_IMAGE="${IMAGE_NAME}:${REPOSITORY_URI}:${GIT_SHA}"
+          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
 
           # Build the Docker image
           docker build -t $TAGGED_IMAGE .
@@ -114,7 +113,7 @@ jobs:
           cd starter/frontend/k8s 
           IMAGE_NAME=frontendapp
           GIT_SHA=${{ github.sha }}
-          REPOSITORY_URI=${FRONTEND_ECR_REPOSITORY_URI}
-          TAGGED_IMAGE="${IMAGE_NAME}:${REPOSITORY_URI}:${GIT_SHA}"
+          REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
+          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
           kustomize edit set image frontend=${TAGGED_IMAGE}
           kustomize build | kubectl apply -f ./kustomization.yaml
