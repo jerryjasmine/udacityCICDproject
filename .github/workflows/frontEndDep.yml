@@ -42,6 +42,8 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: "us-east-1"
     needs: test  # Ensures the build job waits for both lint and test jobs to complete
     steps:
       - name: Checkout code
@@ -52,12 +54,12 @@ jobs:
 
       - name: Print AWS Region
         run: |
-          echo "AWS Region: ${{ secrets.AWS_REGION }}"
+          echo "AWS Region: ${AWS_REGION}"
 
       - name: Log in to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          region: ${{ secrets.AWS_REGION }}
+          region: ${AWS_REGION}
 
       - name: Build Docker image
         run: |
