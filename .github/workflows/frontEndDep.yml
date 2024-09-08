@@ -91,17 +91,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'latest'  # Adjust as needed
+      # - name: Set up kubectl
+      #   uses: azure/setup-kubectl@v1
+      #   with:
+      #     version: 'latest'  # Adjust as needed
       
-      - name: Set up Kustomize
-        run: |
-          KUSTOMIZE_VERSION=4.5.7  # Specify the Kustomize version
-          curl -sLO "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v$KUSTOMIZE_VERSION/kustomize_v$KUSTOMIZE_VERSION_linux_amd64.tar.gz"
-          tar xzf kustomize_v$KUSTOMIZE_VERSION_linux_amd64.tar.gz
-          sudo mv kustomize /usr/local/bin/
+      # - name: Set up Kustomize
+      #   run: |
+      #     KUSTOMIZE_VERSION=4.5.7  # Specify the Kustomize version
+      #     curl -sLO "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v$KUSTOMIZE_VERSION/kustomize_v$KUSTOMIZE_VERSION_linux_amd64.tar.gz"
+      #     tar xzf kustomize_v$KUSTOMIZE_VERSION_linux_amd64.tar.gz
+      #     sudo mv kustomize /usr/local/bin/
 
       # - name: Configure kubectl
       #   run: |
@@ -114,6 +114,7 @@ jobs:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
       - name: Deploy to Kubernetes
+        uses: imranismail/setup-kustomize@v2
         run: |
           cd starter/frontend/k8s 
           IMAGE_NAME=frontendapp
