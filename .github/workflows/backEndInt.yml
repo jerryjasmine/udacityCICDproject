@@ -93,6 +93,7 @@ jobs:
         run: curl http://localhost:5000/movies
         
       - name: Check the request
-        run: |
-          docker logs -f mp-backend
-          docker stop
+        run: docker logs -f mp-backend
+        
+      - name: Check the request
+        run: docker stop
