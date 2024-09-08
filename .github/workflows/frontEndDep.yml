@@ -65,6 +65,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          cd starter/frontend
           # Define the ECR repository and image details
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
           IMAGE_NAME=frontendapp
