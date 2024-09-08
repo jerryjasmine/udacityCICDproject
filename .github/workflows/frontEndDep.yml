@@ -107,14 +107,13 @@ jobs:
       #   run: |
       #     aws eks --region us-east-1 update-kubeconfig --name cluster
 
-      - name: Configure kubectl
-        run: |
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      # - name: Configure kubectl
+      #   run: |
+      #     echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+      #   env:
+      #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
       - name: Deploy to Kubernetes
-        uses: imranismail/setup-kustomize@v2
         run: |
           cd starter/frontend/k8s 
           IMAGE_NAME=frontendapp
