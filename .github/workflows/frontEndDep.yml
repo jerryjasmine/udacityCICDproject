@@ -78,6 +78,10 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           # Push the image tagged with Git SHA
+          REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
+          IMAGE_NAME=frontendapp
+          GIT_SHA=${{ github.sha }}
+          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
           docker push $TAGGED_IMAGE
   
   deploy:
