@@ -41,7 +41,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: lint  # Ensures that the test job waits for the lint job to complete
+    #needs: lint  # Ensures that the test job waits for the lint job to complete
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
