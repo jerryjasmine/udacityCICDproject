@@ -91,10 +91,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Set up kubectl
-      #   uses: azure/setup-kubectl@v1
-      #   with:
-      #     version: 'latest'  # Adjust as needed
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'  # Adjust as needed
       
       # - name: Set up Kustomize
       #   run: |
@@ -109,9 +109,13 @@ jobs:
 
       - name: Configure kubectl
         run: |
+          mkdir $HOME/.kube/
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Check Kubernetes cluster
+        run: kubectl cluster-info
 
       - name: Deploy to Kubernetes
         run: |
