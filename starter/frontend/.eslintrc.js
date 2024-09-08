@@ -27,13 +27,12 @@ module.exports = {
           singleQuote: true,
           jsxSingleQuote: false,
           printWidth: 120,
-          parser: 'babel-ts'
-        },
-        'warn',  { endOfLine: 'auto'}
+          parser: 'babel-ts',
+          endOfLine: 'off'
+        }
       ],
       // Customize your rules here
       'react/prop-types': process.env.FAIL_LINT ? 2 : 0,
       'react/jsx-uses-vars': 'warn',
     },
   };
-  
