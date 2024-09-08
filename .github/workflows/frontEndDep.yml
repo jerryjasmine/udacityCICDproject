@@ -145,3 +145,7 @@ jobs:
           TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
           kustomize edit set image frontend=${TAGGED_IMAGE}
           kustomize build | kubectl apply -f ./kustomization.yaml --validate=false
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${AWS_REGION}
