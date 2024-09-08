@@ -2,10 +2,10 @@ name: CI Workflow
 
 on:
   pull_request:
-    paths:
-      - 'starter/frontend/**'
     branches:
       - main
+    paths:
+    - 'starter/frontend/**'
   push:
     branches:
       - main
@@ -30,7 +30,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd starter/frontend
+          npm install
 
       - name: Run lint
         run: npm run lint
