@@ -27,9 +27,9 @@ module.exports = {
           singleQuote: true,
           jsxSingleQuote: false,
           printWidth: 120,
-          parser: 'babel-ts',
-          endOfLine: 'auto'
+          parser: 'babel-ts'
         },
+        "warn",  {"endOfLine": "auto"}
       ],
       // Customize your rules here
       'react/prop-types': process.env.FAIL_LINT ? 2 : 0,
