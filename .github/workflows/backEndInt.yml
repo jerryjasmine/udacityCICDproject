@@ -96,4 +96,4 @@ jobs:
         run: docker logs mp-backend
         
       - name: stop the application
-        run: docker stop
+        run: docker stop mp-backend
