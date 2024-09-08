@@ -35,7 +35,9 @@ jobs:
           npm install
 
       - name: Run lint
-        run: npm run lint
+        run: |
+          cd starter/frontend
+          npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -50,7 +52,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd starter/frontend 
+          npm install
 
       - name: Run tests
-        run: npm test
+        run: |
+          cd starter/frontend 
+          npm test
