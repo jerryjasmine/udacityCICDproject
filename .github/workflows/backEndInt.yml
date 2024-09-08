@@ -1,4 +1,4 @@
-name: CI Workflow
+name: backend CI Workflow
 
 on:
   pull_request:
@@ -27,8 +27,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-           python-version: 3.9
+           python-version: 3.10
 
+      - name: Install pipenv
+        run: |
+          cd starter/backend  
+          pip install pipenv
+      
       - name: Install dependencies
         run: |
           cd starter/backend
@@ -50,6 +55,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
            python-version: 3.9
+
+      - name: Install pipenv
+        run: |
+          cd starter/backend  
+          pip install pipenv
 
       - name: Install dependencies
         run: |
