@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd starter/frontend
-          npm install
+          npm ci
 
       - name: Run lint
         run: |
