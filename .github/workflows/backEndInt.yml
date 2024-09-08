@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd starter/backend
-          pipenv install
+          pipenv install --dev
 
       - name: Run lint
         run: |
