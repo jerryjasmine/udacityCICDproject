@@ -107,11 +107,11 @@ jobs:
       #   run: |
       #     aws eks --region us-east-1 update-kubeconfig --name cluster
 
-      # - name: Configure kubectl
-      #   run: |
-      #     echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-      #   env:
-      #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
       - name: Deploy to Kubernetes
         run: |
@@ -120,5 +120,5 @@ jobs:
           GIT_SHA=${{ github.sha }}
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
           TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
-          kustomize edit set image frontend=${TAGGED_IMAGE}
+          kustomize edit set image frontend=${TAGGED_IMAGE} --validate=false
           kustomize build | kubectl apply -f ./kustomization.yaml
