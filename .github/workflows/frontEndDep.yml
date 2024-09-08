@@ -107,11 +107,11 @@ jobs:
       #   run: |
       #     aws eks --region us-east-1 update-kubeconfig --name cluster
 
-      # - name: Configure kubectl
-      #   run: |
-      #     echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-      #   env:
-      #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
       - name: Deploy to Kubernetes
         run: |
