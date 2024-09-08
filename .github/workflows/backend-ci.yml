@@ -5,10 +5,12 @@ on:
     branches:
       - main
     paths:
-    - 'starter/backend/**'
+      - 'starter/backend/**'
   push:
     branches:
       - main
+    paths:
+      - 'starter/backend/**'
   workflow_dispatch:
     inputs:
       branch:
