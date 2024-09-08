@@ -29,7 +29,7 @@ module.exports = {
           printWidth: 120,
           parser: 'babel-ts'
         },
-        "warn",  {"endOfLine": "auto"}
+        'warn',  {endOfLine: auto}
       ],
       // Customize your rules here
       'react/prop-types': process.env.FAIL_LINT ? 2 : 0,
