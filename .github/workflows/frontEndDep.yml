@@ -120,5 +120,5 @@ jobs:
           GIT_SHA=${{ github.sha }}
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
           TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
-          kustomize edit set image frontendapp=${TAGGED_IMAGE}
-          kustomize build | kubectl apply -f ./kustomization.yaml
+          kustomize edit set image frontend=${TAGGED_IMAGE}
+          kustomize build | kubectl apply -f ./kustomization.yaml --validate=false
