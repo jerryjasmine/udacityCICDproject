@@ -2,6 +2,8 @@ name: CI Workflow
 
 on:
   pull_request:
+    paths:
+      - 'frontend/**'
     branches:
       - main
   push:
