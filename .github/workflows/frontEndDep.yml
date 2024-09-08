@@ -60,8 +60,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           region: ${AWS_REGION}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }} # Use your stored AWS Access Key ID
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }} # Use your stored AWS Secret Access Key
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # Use your stored AWS Access Key ID
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Use your stored AWS Secret Access Key
 
       - name: Build Docker image
         run: |
