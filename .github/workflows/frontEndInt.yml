@@ -37,7 +37,7 @@ jobs:
       - name: Run lint
         run: |
           cd starter/frontend
-          npm run lint --fix
+          npm run lint
 
   test:
     runs-on: ubuntu-latest
