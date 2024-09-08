@@ -28,7 +28,7 @@ module.exports = {
           jsxSingleQuote: false,
           printWidth: 120,
           parser: 'babel-ts',
-          endOfLine: 'off'
+          endOfLine: 'auto'
         }
       ],
       // Customize your rules here
