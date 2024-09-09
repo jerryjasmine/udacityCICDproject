@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: "us-east-1"
-    needs: needs: [lint, test]
+    needs: [lint, test]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
