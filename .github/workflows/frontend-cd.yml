@@ -1,11 +1,6 @@
 name: frontend CD Workflow
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'starter/frontend/**'
   push:
     branches:
       - main
@@ -20,6 +15,27 @@ on:
         type: string
 
 jobs:
+   lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd starter/frontend
+          npm ci
+
+      - name: Run lint
+        run: |
+          cd starter/frontend
+          npm run lint
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: "us-east-1"
-    needs: test
+    needs: [lint, test]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -65,18 +81,24 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build Docker image
+        env:
+          REACT_APP_MOVIE_API_URL: ${{ secrets.REACT_APP_MOVIE_API_URL }}
         run: |
           cd starter/frontend
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
           GIT_SHA=${{ github.sha }}
-          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
-          docker build -t $TAGGED_IMAGE .
-      
+          IMAGE_NAME=frontendapp
+          TAGGED_IMAGE="${IMAGE_NAME}:${GIT_SHA}"
+          docker build \
+          --build-arg=REACT_APP_MOVIE_API_URL="http://$REACT_APP_MOVIE_API_URL/" \
+          -t $TAGGED_IMAGE \
+          .
       - name: Push Docker image to ECR
         run: |
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
+          IMAGE_NAME=frontendapp
           GIT_SHA=${{ github.sha }}
-          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
+          TAGGED_IMAGE="${IMAGE_NAME}:${GIT_SHA}"
           docker push $TAGGED_IMAGE
   
   deploy:
@@ -99,7 +121,8 @@ jobs:
           cd starter/frontend/k8s 
           GIT_SHA=${{ github.sha }}
           REPOSITORY_URI=${{ secrets.FRONTEND_ECR_REPOSITORY_URI }}
-          TAGGED_IMAGE="${REPOSITORY_URI}:${GIT_SHA}"
+          IMAGE_NAME=frontendapp
+          TAGGED_IMAGE="${IMAGE_NAME}:${GIT_SHA}"
           kustomize edit set image frontend=${TAGGED_IMAGE}
           kustomize build | kubectl apply -f - --validate=false
         env:
